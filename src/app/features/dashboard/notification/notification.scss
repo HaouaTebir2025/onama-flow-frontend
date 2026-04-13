@@ -1,0 +1,41 @@
+:host {
+  display: block;
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  z-index: 1000;
+}
+
+.notification {
+  padding: 12px 20px;
+  border-radius: 8px;
+  margin-bottom: 10px;
+  animation: slideIn 0.3s ease;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
+
+.notification-success {
+  background-color: #10b981;
+  color: white;
+}
+
+.notification-error {
+  background-color: #ef4444;
+  color: white;
+}
+
+.notification-info {
+  background-color: #3b82f6;
+  color: white;
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}

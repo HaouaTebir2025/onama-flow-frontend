@@ -1,0 +1,95 @@
+<div class="min-h-screen relative overflow-hidden">
+  
+  <!-- Image de fond avec opacité réduite pour plus de clarté -->
+  <div class="absolute inset-0 bg-cover bg-center bg-no-repeat"
+       style="background-image: linear-gradient(135deg, rgba(0,0,0,0.5), rgba(0,0,0,0.4)), url('images/onam.jpg'); background-size: cover; background-position: center 30%;">
+  </div>
+
+  <div class="relative z-10 container mx-auto px-4 py-4 max-w-lg">
+    
+    <!-- Header réduit -->
+    <div class="flex justify-between items-center mb-4">
+      <div class="flex items-center space-x-2">
+        <div class="bg-white/15 backdrop-blur rounded-lg p-1">
+          <img src="images/logo-onama.png.webp" class="h-7 w-auto">
+        </div>
+        <div>
+          <h1 class="text-base font-bold text-white">ONAMA FLOW</h1>
+          <p class="text-[10px] text-sky-200">Dépôt de candidature</p>
+        </div>
+      </div>
+      <button (click)="logout()" class="px-2.5 py-1 bg-red-500/80 text-white rounded-lg text-xs hover:bg-red-600">
+        Déconnexion
+      </button>
+    </div>
+
+    <!-- Message bienvenue compact -->
+    <div class="bg-white/10 backdrop-blur rounded-lg p-2.5 mb-4">
+      <p class="text-white text-xs">
+        Bonjour <strong>{{ user?.prenom }} {{ user?.nom }}</strong>,<br>
+        Complétez ce formulaire
+      </p>
+    </div>
+
+    <!-- Messages -->
+    <div *ngIf="errorMessage" class="mb-3 p-2 bg-red-500/80 text-white rounded-lg text-xs">{{ errorMessage }}</div>
+    <div *ngIf="successMessage" class="mb-3 p-2 bg-green-500/80 text-white rounded-lg text-xs">{{ successMessage }}</div>
+
+    <!-- Formulaire compact -->
+    <div class="bg-white/10 backdrop-blur rounded-lg overflow-hidden">
+      <div class="bg-sky-600 px-3 py-1.5">
+        <h2 class="text-white font-medium text-xs">📝 Formulaire</h2>
+      </div>
+      
+      <div class="p-3">
+        <div class="grid grid-cols-2 gap-2 mb-2">
+          <div>
+            <label class="block text-[10px] font-medium text-white/80 mb-0.5">Nom</label>
+            <input type="text" [value]="user?.nom" disabled class="w-full px-2 py-1 text-xs border border-white/30 rounded bg-white/20 text-white">
+          </div>
+          <div>
+            <label class="block text-[10px] font-medium text-white/80 mb-0.5">Prénom</label>
+            <input type="text" [value]="user?.prenom" disabled class="w-full px-2 py-1 text-xs border border-white/30 rounded bg-white/20 text-white">
+          </div>
+        </div>
+        
+        <div class="mb-2">
+          <label class="block text-[10px] font-medium text-white/80 mb-0.5">Email</label>
+          <input type="email" [value]="user?.email" disabled class="w-full px-2 py-1 text-xs border border-white/30 rounded bg-white/20 text-white">
+        </div>
+        
+        <div class="mb-2">
+          <label class="block text-[10px] font-medium text-white/80 mb-0.5">Téléphone</label>
+          <input type="tel" [(ngModel)]="candidature.telephone" class="w-full px-2 py-1 text-xs border border-white/30 rounded bg-white/20 text-white">
+        </div>
+        
+        <div class="mb-2">
+          <label class="block text-[10px] font-medium text-white/80 mb-0.5">Université</label>
+          <input type="text" [(ngModel)]="candidature.universite" class="w-full px-2 py-1 text-xs border border-white/30 rounded bg-white/20 text-white">
+        </div>
+        
+        <div class="mb-2">
+          <label class="block text-[10px] font-medium text-white/80 mb-0.5">CV (PDF, DOC, DOCX)</label>
+          <input type="file" (change)="onFileSelected($event, 'cv')" accept=".pdf,.doc,.docx" class="w-full text-[10px] text-white file:mr-1 file:py-0.5 file:px-2 file:rounded file:text-[10px]">
+          <p class="text-[9px] text-white/50 mt-0.5">Max 5 Mo</p>
+        </div>
+        
+        <div class="mb-3">
+          <label class="block text-[10px] font-medium text-white/80 mb-0.5">Lettre motivation</label>
+          <input type="file" (change)="onFileSelected($event, 'lettre')" accept=".pdf,.doc,.docx" class="w-full text-[10px] text-white file:mr-1 file:py-0.5 file:px-2 file:rounded file:text-[10px]">
+          <p class="text-[9px] text-white/50 mt-0.5">Max 5 Mo</p>
+        </div>
+        
+        <button (click)="onSubmit()" [disabled]="isLoading"
+                class="w-full py-1.5 bg-sky-500 text-white rounded-lg font-medium text-xs hover:bg-sky-600 transition">
+          {{ isLoading ? 'Envoi...' : '📄 Déposer' }}
+        </button>
+      </div>
+    </div>
+    
+    <!-- Lien suivi -->
+    <div class="text-center mt-3">
+      <a routerLink="/suivi-public" class="text-sky-300 text-[10px] hover:underline">🔍 Suivre ma candidature</a>
+    </div>
+  </div>
+</div>

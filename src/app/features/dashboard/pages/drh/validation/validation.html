@@ -1,0 +1,271 @@
+<div class="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 p-6 animate-fadeIn">
+  <div class="max-w-7xl mx-auto">
+    
+    <!-- En-tête avec logo -->
+    <div class="mb-8">
+      <div class="flex flex-col md:flex-row md:items-center md:justify-between">
+        <div class="flex items-center space-x-4">
+          <div class="h-14 w-14 bg-gradient-to-br from-blue-700 to-blue-800 rounded-2xl flex items-center justify-center shadow-lg">
+            <img src="images/logo-onama.png.webp" class="h-10 w-10 object-contain">
+          </div>
+          <div>
+            <h1 class="text-3xl font-bold bg-gradient-to-r from-gray-800 to-gray-600 bg-clip-text text-transparent">
+              Validation des dossiers
+            </h1>
+            <p class="text-gray-500 mt-1">Vérifier et valider les dossiers des candidats</p>
+          </div>
+        </div>
+        <div class="mt-2 md:mt-0">
+          <div class="flex items-center space-x-2 text-gray-400 text-sm">
+            <svg class="w-4 h-4 animate-pulse" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+            </svg>
+            <span>Mise à jour en temps réel</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Cartes statistiques -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-5 mb-8">
+      
+      <div class="group relative bg-white rounded-2xl shadow-sm hover:shadow-xl transition-all duration-300 overflow-hidden">
+        <div class="absolute inset-0 bg-gradient-to-r from-amber-500 to-orange-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+        <div class="relative p-6">
+          <div class="flex items-center justify-between">
+            <div>
+              <p class="text-sm font-medium text-gray-500 uppercase tracking-wider group-hover:text-white/80">En attente de validation</p>
+              <p class="text-4xl font-bold text-amber-600 group-hover:text-white mt-2">{{ stats.enAttente }}</p>
+            </div>
+            <div class="h-14 w-14 bg-amber-100 rounded-xl flex items-center justify-center group-hover:bg-white/20 transition-colors">
+              <svg class="w-7 h-7 text-amber-600 group-hover:text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+              </svg>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="group relative bg-white rounded-2xl shadow-sm hover:shadow-xl transition-all duration-300 overflow-hidden">
+        <div class="absolute inset-0 bg-gradient-to-r from-blue-500 to-sky-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+        <div class="relative p-6">
+          <div class="flex items-center justify-between">
+            <div>
+              <p class="text-sm font-medium text-gray-500 uppercase tracking-wider group-hover:text-white/80">Déposés aujourd'hui</p>
+              <p class="text-4xl font-bold text-blue-600 group-hover:text-white mt-2">{{ stats.aujourdhui }}</p>
+            </div>
+            <div class="h-14 w-14 bg-blue-100 rounded-xl flex items-center justify-center group-hover:bg-white/20 transition-colors">
+              <svg class="w-7 h-7 text-blue-600 group-hover:text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+              </svg>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Notification Toast -->
+    <div *ngIf="message" 
+         class="fixed top-24 right-6 z-50 animate-slideInRight"
+         [ngClass]="{
+           'bg-green-500 text-white': messageType === 'success',
+           'bg-red-500 text-white': messageType === 'error',
+           'bg-blue-500 text-white': messageType === 'info'
+         }">
+      <div class="flex items-center space-x-3 px-4 py-3 rounded-lg shadow-lg">
+        <span class="text-xl">{{ messageType === 'success' ? '✓' : messageType === 'error' ? '✗' : 'ℹ' }}</span>
+        <span>{{ message }}</span>
+        <button (click)="message = ''" class="ml-4 text-white/80 hover:text-white">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+          </svg>
+        </button>
+      </div>
+    </div>
+
+    <!-- Barre de recherche -->
+    <div class="bg-white rounded-2xl shadow-sm p-4 mb-6">
+      <div class="flex flex-col md:flex-row gap-4">
+        <div class="flex-1 relative">
+          <svg class="absolute left-4 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+          </svg>
+          <input type="text" [(ngModel)]="searchTerm"
+                 placeholder="Rechercher un candidat (nom, prénom, université)..."
+                 class="w-full pl-12 pr-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all">
+        </div>
+        <button (click)="rafraichir()"
+                class="px-5 py-3 bg-gray-100 text-gray-600 rounded-xl hover:bg-gray-200 transition flex items-center space-x-2">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path>
+          </svg>
+          <span>Actualiser</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Chargement -->
+    <div *ngIf="isLoading" class="flex justify-center items-center py-12">
+      <div class="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div>
+      <span class="ml-3 text-gray-500">Chargement des dossiers...</span>
+    </div>
+
+    <!-- Liste des candidats -->
+    <div *ngIf="!isLoading" class="space-y-4">
+      <div *ngFor="let s of stagiairesFiltres" 
+           class="bg-white rounded-2xl shadow-sm hover:shadow-md transition-all duration-300 overflow-hidden border border-gray-100">
+        
+        <div class="p-6">
+          <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+            
+            <div class="flex items-center space-x-4 flex-1">
+              <div class="relative">
+                <div class="h-14 w-14 rounded-full bg-gradient-to-br from-amber-100 to-amber-200 flex items-center justify-center text-amber-600 font-bold text-xl">
+                  {{ getInitiales(s.nom, s.prenom) }}
+                </div>
+                <div class="absolute -top-1 -right-1 w-4 h-4 bg-amber-500 rounded-full border-2 border-white"></div>
+              </div>
+              <div>
+                <h3 class="text-lg font-bold text-gray-800">{{ s.nom }} {{ s.prenom }}</h3>
+                <div class="flex flex-wrap items-center gap-3 mt-1">
+                  <p class="text-sm text-gray-500 flex items-center">
+                    <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path>
+                    </svg>
+                    {{ s.universite }}
+                  </p>
+                  <p class="text-sm text-gray-500 flex items-center">
+                    <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"></path>
+                    </svg>
+                    {{ s.telephone || 'Non renseigné' }}
+                  </p>
+                </div>
+                <div class="flex items-center mt-2 space-x-3">
+                  <span class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium bg-amber-100 text-amber-700">
+                    📄 {{ s.statut }}
+                  </span>
+                  <span class="text-xs text-gray-400 flex items-center">
+                    📅 Déposé le {{ formatDate(s.dateDepot) }}
+                  </span>
+                </div>
+              </div>
+            </div>
+
+            <div class="flex space-x-3">
+              <button (click)="ouvrirValidation(s)"
+                      class="px-5 py-2.5 bg-gradient-to-r from-green-500 to-emerald-500 text-white rounded-xl font-medium hover:from-green-600 hover:to-emerald-600 transition-all transform hover:scale-105 shadow-md flex items-center space-x-2">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                </svg>
+                <span>Valider</span>
+              </button>
+              <button (click)="ouvrirRejet(s)"
+                      class="px-5 py-2.5 bg-gradient-to-r from-red-500 to-rose-500 text-white rounded-xl font-medium hover:from-red-600 hover:to-rose-600 transition-all transform hover:scale-105 shadow-md flex items-center space-x-2">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                </svg>
+                <span>Rejeter</span>
+              </button>
+            </div>
+          </div>
+        </div>
+        
+        <div class="h-1 bg-gray-100">
+          <div class="h-full bg-amber-500 rounded-full transition-all duration-500" style="width: 33%"></div>
+        </div>
+      </div>
+
+      <div *ngIf="stagiairesFiltres.length === 0" class="bg-white rounded-2xl shadow-sm p-12 text-center">
+        <div class="flex flex-col items-center justify-center">
+          <div class="h-20 w-20 bg-gray-100 rounded-full flex items-center justify-center mb-4">
+            <img src="images/logo-onama.png.webp" class="h-10 w-10 opacity-30">
+          </div>
+          <p class="text-gray-400 font-medium text-lg">Aucun dossier en attente</p>
+          <p class="text-sm text-gray-400 mt-1">Tous les dossiers ont été traités</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- MODALE DE CONFIRMATION PROFESSIONNELLE -->
+<div *ngIf="showModal" class="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-50 animate-fadeIn">
+  <div class="bg-white rounded-2xl shadow-2xl max-w-md w-full mx-4 overflow-hidden animate-scaleIn">
+    
+    <!-- En-tête modale -->
+    <div class="p-6 text-center border-b" [ngClass]="modalAction === 'valider' ? 'bg-green-50 border-green-100' : 'bg-red-50 border-red-100'">
+      <div class="w-16 h-16 mx-auto rounded-full flex items-center justify-center mb-4"
+           [ngClass]="modalAction === 'valider' ? 'bg-green-100' : 'bg-red-100'">
+        <svg class="w-8 h-8" [ngClass]="modalAction === 'valider' ? 'text-green-600' : 'text-red-600'" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path *ngIf="modalAction === 'valider'" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+          <path *ngIf="modalAction === 'rejeter'" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+        </svg>
+      </div>
+      <h2 class="text-xl font-bold" [ngClass]="modalAction === 'valider' ? 'text-green-800' : 'text-red-800'">
+        {{ modalAction === 'valider' ? 'Valider le dossier' : 'Rejeter le dossier' }}
+      </h2>
+      <p class="text-gray-500 mt-1">
+        {{ modalAction === 'valider' ? 'Confirmez-vous la validation de ce dossier ?' : 'Confirmez-vous le rejet de ce dossier ?' }}
+      </p>
+    </div>
+    
+    <!-- Corps modale -->
+    <div class="p-6">
+      <div class="bg-gray-50 rounded-lg p-4 mb-4">
+        <p class="text-sm text-gray-500">Candidat</p>
+        <p class="font-semibold text-gray-800">{{ selectedStagiaire?.prenom }} {{ selectedStagiaire?.nom }}</p>
+        <p class="text-sm text-gray-500 mt-2">Université</p>
+        <p class="text-gray-700">{{ selectedStagiaire?.universite }}</p>
+      </div>
+      
+      <div>
+        <label class="block text-sm font-medium text-gray-700 mb-2">Commentaire (optionnel)</label>
+        <textarea [(ngModel)]="modalCommentaire"
+                  rows="3"
+                  class="w-full px-4 py-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  placeholder="Ajouter un commentaire..."></textarea>
+      </div>
+    </div>
+    
+    <!-- Pied modale -->
+    <div class="p-6 bg-gray-50 flex space-x-3">
+      <button (click)="fermerModal()"
+              class="flex-1 px-4 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-100 transition">
+        Annuler
+      </button>
+      <button (click)="confirmerAction()"
+              [disabled]="modalLoading"
+              class="flex-1 px-4 py-2 rounded-lg text-white font-medium transition disabled:opacity-50"
+              [ngClass]="modalAction === 'valider' ? 'bg-green-600 hover:bg-green-700' : 'bg-red-600 hover:bg-red-700'">
+        <span *ngIf="!modalLoading">{{ modalAction === 'valider' ? '✓ Valider' : '✗ Rejeter' }}</span>
+        <span *ngIf="modalLoading" class="flex items-center justify-center">
+          <svg class="animate-spin h-4 w-4 mr-2" viewBox="0 0 24 24">
+            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4" fill="none"></circle>
+            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"></path>
+          </svg>
+          Traitement...
+        </span>
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- Styles additionnels -->
+<style>
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+  @keyframes slideInRight {
+    from { transform: translateX(100%); opacity: 0; }
+    to { transform: translateX(0); opacity: 1; }
+  }
+  @keyframes scaleIn {
+    from { transform: scale(0.95); opacity: 0; }
+    to { transform: scale(1); opacity: 1; }
+  }
+  .animate-fadeIn { animation: fadeIn 0.2s ease-out; }
+  .animate-slideInRight { animation: slideInRight 0.3s ease-out; }
+  .animate-scaleIn { animation: scaleIn 0.2s ease-out; }
+</style>

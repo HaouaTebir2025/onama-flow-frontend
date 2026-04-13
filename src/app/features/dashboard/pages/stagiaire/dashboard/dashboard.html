@@ -1,0 +1,75 @@
+<div class="space-y-6">
+  
+  <div class="bg-gradient-to-r from-sky-500 to-sky-600 rounded-2xl p-6 text-white">
+    <h1 class="text-2xl font-bold">Bonjour, {{ user?.prenom }} {{ user?.nom }} !</h1>
+    <p class="text-sky-100 mt-1">Bienvenue sur votre espace stagiaire ONAMA FLOW</p>
+  </div>
+
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+    <a routerLink="/stagiaire/depot-lettre" 
+       class="group bg-white rounded-2xl shadow-md p-6 hover:shadow-xl transition border border-gray-100">
+      <div class="flex items-center justify-between">
+        <div>
+          <div class="w-12 h-12 bg-sky-100 rounded-xl flex items-center justify-center mb-3">
+            📄
+          </div>
+          <h3 class="text-lg font-bold text-gray-800">Déposer ma lettre</h3>
+          <p class="text-sm text-gray-500 mt-1">Téléversez votre lettre de stage</p>
+        </div>
+        <span class="text-2xl text-gray-400 group-hover:translate-x-1 transition">→</span>
+      </div>
+    </a>
+
+    <a routerLink="/stagiaire/suivi" 
+       class="group bg-white rounded-2xl shadow-md p-6 hover:shadow-xl transition border border-gray-100">
+      <div class="flex items-center justify-between">
+        <div>
+          <div class="w-12 h-12 bg-green-100 rounded-xl flex items-center justify-center mb-3">
+            📊
+          </div>
+          <h3 class="text-lg font-bold text-gray-800">Suivre mon dossier</h3>
+          <p class="text-sm text-gray-500 mt-1">Consultez l'avancement de votre stage</p>
+        </div>
+        <span class="text-2xl text-gray-400 group-hover:translate-x-1 transition">→</span>
+      </div>
+    </a>
+  </div>
+
+  <div *ngIf="!isLoading && dossier" class="bg-white rounded-2xl shadow-md overflow-hidden">
+    <div class="bg-gray-50 px-6 py-4 border-b">
+      <h2 class="font-semibold text-gray-800">📋 Mon dossier de stage</h2>
+    </div>
+    <div class="p-6">
+      <div class="flex items-center justify-between mb-4">
+        <div>
+          <p class="text-sm text-gray-500">Statut actuel</p>
+          <div class="flex items-center space-x-2 mt-1">
+            <span class="text-2xl">{{ getStatutIcon(dossier.statut) }}</span>
+            <span class="px-3 py-1 rounded-full text-sm font-medium" [ngClass]="getStatutClass(dossier.statut)">
+              {{ dossier.statut }}
+            </span>
+          </div>
+        </div>
+        <div class="text-right">
+          <p class="text-sm text-gray-500">Date de dépôt</p>
+          <p class="font-medium text-gray-800">{{ dossier.dateDepot }}</p>
+        </div>
+      </div>
+      
+      <div class="bg-gray-50 rounded-xl p-4 mt-4">
+        <p class="text-sm text-gray-600">{{ getStatutMessage(dossier.statut) }}</p>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="!isLoading && !dossier" class="bg-white rounded-2xl shadow-md p-8 text-center">
+    <div class="text-5xl mb-4">📭</div>
+    <h3 class="text-lg font-medium text-gray-800 mb-2">Vous n'avez pas encore de dossier</h3>
+    <p class="text-gray-500 mb-4">Déposez votre lettre de stage pour commencer</p>
+    <a routerLink="/stagiaire/depot-lettre" 
+       class="inline-flex items-center space-x-2 px-5 py-2 bg-sky-600 text-white rounded-lg hover:bg-sky-700 transition">
+      <span>Déposer ma lettre</span>
+      <span>→</span>
+    </a>
+  </div>
+</div>

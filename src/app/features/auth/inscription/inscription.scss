@@ -1,0 +1,65 @@
+:host {
+  display: block;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-spin {
+  animation: spin 1s linear infinite;
+}
+
+.animate-slideDown {
+  animation: slideDown 0.3s ease-out;
+}
+
+.bg-white\/95 {
+  animation: fadeIn 0.3s ease-out;
+}
+
+input {
+  transition: all 0.2s ease;
+  
+  &::placeholder {
+    color: #9ca3af;
+    font-size: 13px;
+  }
+  
+  &:focus {
+    box-shadow: 0 0 0 3px rgba(14, 165, 233, 0.1);
+  }
+}
+
+// Validation des champs
+input.ng-invalid.ng-touched {
+  border-color: #f87171;
+}
+
+input.ng-valid.ng-touched {
+  border-color: #4ade80;
+}

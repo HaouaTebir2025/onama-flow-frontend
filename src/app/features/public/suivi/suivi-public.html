@@ -1,0 +1,156 @@
+<div class="min-h-screen relative overflow-hidden">
+  
+  <!-- Image de fond ONAMA -->
+  <div class="absolute inset-0 bg-cover bg-center bg-no-repeat"
+       style="background-image: linear-gradient(135deg, rgba(0,0,0,0.75), rgba(0,0,0,0.6)), url('images/onam.jpg'); background-size: cover; background-position: center;">
+  </div>
+  
+  <!-- Effets décoratifs -->
+  <div class="absolute top-20 right-10 w-60 h-60 bg-sky-500/10 rounded-full blur-3xl"></div>
+  <div class="absolute bottom-20 left-10 w-60 h-60 bg-blue-500/10 rounded-full blur-3xl"></div>
+
+  <div class="relative z-10 container mx-auto px-4 py-8 max-w-2xl">
+    
+    <!-- Logo et titre -->
+    <div class="text-center mb-8">
+      <div class="flex justify-center mb-4">
+        <div class="bg-white/15 backdrop-blur rounded-xl p-3">
+          <img src="images/logo-onama.png.webp" class="h-12 w-auto">
+        </div>
+      </div>
+      <h1 class="text-2xl font-bold text-white mb-2">Suivi de candidature</h1>
+      <p class="text-sky-200 text-sm">Entrez votre numéro de dossier pour suivre l'avancement</p>
+    </div>
+
+    <!-- Zone de recherche -->
+    <div class="bg-white/10 backdrop-blur-md rounded-xl p-6 border border-white/20 shadow-xl">
+      
+      <!-- Champ de recherche -->
+      <div class="mb-4">
+        <label class="block text-sm font-medium text-white/80 mb-2">Numéro de dossier</label>
+        <div class="flex gap-3">
+          <input type="text" 
+                 [(ngModel)]="numeroDossier" 
+                 placeholder="Ex: CAND-202504-0001"
+                 class="flex-1 px-4 py-3 border border-white/30 rounded-xl bg-white/20 text-white placeholder:text-white/50 focus:ring-2 focus:ring-sky-400 focus:border-transparent">
+          <button (click)="rechercher()" 
+                  class="px-6 py-3 bg-gradient-to-r from-sky-500 to-sky-600 text-white rounded-xl font-medium hover:from-sky-600 hover:to-sky-700 transition shadow-md flex items-center space-x-2">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+            </svg>
+            <span>Rechercher</span>
+          </button>
+        </div>
+        <p class="text-xs text-white/50 mt-2">Format : CAND-AAAA-MM-NNNN</p>
+      </div>
+
+      <!-- Message d'erreur -->
+      <div *ngIf="errorMessage" 
+           class="mt-4 p-3 bg-red-500/90 backdrop-blur text-white rounded-lg text-sm flex items-center space-x-2">
+        <svg class="w-4 h-4 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+        </svg>
+        <span>{{ errorMessage }}</span>
+      </div>
+
+      <!-- Chargement -->
+      <div *ngIf="isLoading" class="flex justify-center py-8">
+        <div class="loader"></div>
+      </div>
+
+      <!-- Résultat de la recherche -->
+      <div *ngIf="candidature && !isLoading" class="mt-6 animate-fadeIn">
+        <!-- En-tête du résultat -->
+        <div class="bg-gradient-to-r from-sky-600 to-sky-700 -mx-6 px-6 py-3">
+          <div class="flex items-center justify-between">
+            <div class="flex items-center space-x-2">
+              <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+              </svg>
+              <span class="text-white font-medium">Dossier trouvé</span>
+            </div>
+            <span class="text-white/80 text-sm font-mono">{{ candidature.numeroDossier }}</span>
+          </div>
+        </div>
+        
+        <!-- Informations candidat -->
+        <div class="p-5 space-y-4">
+          <!-- Nom -->
+          <div class="flex justify-between items-center border-b border-white/20 pb-2">
+            <span class="text-white/70 text-sm">Candidat</span>
+            <span class="text-white font-medium">{{ candidature.prenom }} {{ candidature.nom }}</span>
+          </div>
+          
+          <!-- Date de dépôt -->
+          <div class="flex justify-between items-center border-b border-white/20 pb-2">
+            <span class="text-white/70 text-sm">Date de dépôt</span>
+            <span class="text-white">{{ candidature.dateDepot }}</span>
+          </div>
+          
+          <!-- Statut -->
+          <div class="flex justify-between items-center border-b border-white/20 pb-2">
+            <span class="text-white/70 text-sm">Statut actuel</span>
+            <div class="flex items-center space-x-2">
+              <span class="text-xl">{{ getStatutIcon(candidature.statutCandidature) }}</span>
+              <span class="px-3 py-1 rounded-full text-sm font-medium" [ngClass]="getStatutClass(candidature.statutCandidature)">
+                {{ getStatutLabel(candidature.statutCandidature) }}
+              </span>
+            </div>
+          </div>
+          
+          <!-- Message statut -->
+          <div class="mt-4 p-3 bg-white/5 rounded-lg">
+            <p class="text-white/80 text-sm">{{ getStatutMessage(candidature.statutCandidature) }}</p>
+          </div>
+          
+          <!-- Commentaires -->
+          <div *ngIf="candidature.commentaireSecretariat" class="mt-3 p-3 bg-amber-500/20 rounded-lg border border-amber-500/30">
+            <p class="text-amber-200 text-xs font-medium mb-1">📝 Commentaire du secrétariat</p>
+            <p class="text-white/80 text-sm">{{ candidature.commentaireSecretariat }}</p>
+          </div>
+          
+          <div *ngIf="candidature.commentaireDRH" class="mt-3 p-3 bg-purple-500/20 rounded-lg border border-purple-500/30">
+            <p class="text-purple-200 text-xs font-medium mb-1">📝 Commentaire de la DRH</p>
+            <p class="text-white/80 text-sm">{{ candidature.commentaireDRH }}</p>
+          </div>
+          
+          <!-- Barre de progression -->
+          <div class="mt-4">
+            <div class="flex justify-between text-xs text-white/60 mb-2">
+              <span>📄 Dépôt</span>
+              <span>✅ Validation</span>
+              <span>👔 DRH</span>
+              <span>🎓 Finalisé</span>
+            </div>
+            <div class="w-full bg-white/20 rounded-full h-2 overflow-hidden">
+              <div class="h-full rounded-full transition-all duration-500"
+                   [style.width]="getProgression(candidature.statutCandidature) + '%'"
+                   [ngClass]="{
+                     'bg-gradient-to-r from-amber-500 to-orange-500': getProgression(candidature.statutCandidature) <= 33,
+                     'bg-gradient-to-r from-sky-500 to-blue-500': getProgression(candidature.statutCandidature) > 33 && getProgression(candidature.statutCandidature) <= 66,
+                     'bg-gradient-to-r from-emerald-500 to-green-500': getProgression(candidature.statutCandidature) > 66
+                   }">
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Bouton nouvelle recherche -->
+        <div class="border-t border-white/20 p-4 text-center">
+          <button (click)="reset()" 
+                  class="text-sky-300 hover:text-sky-200 text-sm transition flex items-center justify-center space-x-1 mx-auto">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
+            </svg>
+            <span>Effectuer une nouvelle recherche</span>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Pied de page -->
+    <div class="text-center mt-8">
+      <p class="text-white/40 text-xs">© 2025 ONAMA FLOW - Office National des Médias Audiovisuels</p>
+    </div>
+  </div>
+</div>

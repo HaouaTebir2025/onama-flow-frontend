@@ -1,0 +1,99 @@
+<div class="space-y-6">
+  
+  <div class="bg-white rounded-2xl shadow-md p-6">
+    <h1 class="text-xl font-bold text-gray-800">📊 Suivi de mon dossier</h1>
+    <p class="text-gray-500 mt-1">Consultez l'avancement de votre demande de stage</p>
+  </div>
+
+  <div *ngIf="isLoading" class="flex justify-center py-12">
+    <div class="loader"></div>
+  </div>
+
+  <div *ngIf="!isLoading && !dossier" class="bg-white rounded-2xl shadow-md p-8 text-center">
+    <div class="text-5xl mb-4">📭</div>
+    <h3 class="text-lg font-medium text-gray-800 mb-2">Aucun dossier trouvé</h3>
+    <p class="text-gray-500 mb-4">Vous n'avez pas encore déposé de lettre de stage</p>
+    <a routerLink="/stagiaire/depot-lettre" 
+       class="inline-flex items-center space-x-2 px-5 py-2 bg-sky-600 text-white rounded-lg hover:bg-sky-700 transition">
+      <span>Déposer ma lettre</span>
+      <span>→</span>
+    </a>
+  </div>
+
+  <div *ngIf="!isLoading && dossier" class="space-y-6">
+    
+    <div class="bg-white rounded-2xl shadow-md overflow-hidden">
+      <div class="bg-gradient-to-r from-sky-50 to-blue-50 px-6 py-4 border-b">
+        <h2 class="font-semibold text-gray-800">📌 Statut actuel</h2>
+      </div>
+      <div class="p-6">
+        <div class="flex items-center justify-between mb-4">
+          <div>
+            <span class="text-4xl mr-3">{{ getStatutIcon(dossier.statut) }}</span>
+            <span class="px-3 py-1 rounded-full text-sm font-medium" [ngClass]="getStatutClass(dossier.statut)">
+              {{ dossier.statut }}
+            </span>
+          </div>
+          <div class="text-right">
+            <p class="text-sm text-gray-500">Date de dépôt</p>
+            <p class="font-medium text-gray-800">{{ dossier.dateDepot }}</p>
+          </div>
+        </div>
+        
+        <div class="bg-gray-50 rounded-xl p-4">
+          <p class="text-gray-700">{{ getStatutMessage(dossier.statut) }}</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="bg-white rounded-2xl shadow-md p-6">
+      <h2 class="font-semibold text-gray-800 mb-4">📈 Progression du dossier</h2>
+      <div class="relative">
+        <div class="flex justify-between mb-2">
+          <div class="text-center flex-1"><span class="text-sm">📄 Dépôt</span></div>
+          <div class="text-center flex-1"><span class="text-sm">✅ Validation</span></div>
+          <div class="text-center flex-1"><span class="text-sm">📅 Planification</span></div>
+          <div class="text-center flex-1"><span class="text-sm">🎓 Terminé</span></div>
+        </div>
+        <div class="w-full bg-gray-200 rounded-full h-2">
+          <div class="h-2 rounded-full transition-all duration-700" 
+               [ngClass]="{
+                 'bg-yellow-500': dossier.statut === 'DEPOT',
+                 'bg-green-500': dossier.statut === 'VALIDE',
+                 'bg-blue-500': dossier.statut === 'PROGRAMME',
+                 'bg-gray-500': dossier.statut === 'TERMINE'
+               }"
+               [style.width]="getEtapeProgress(dossier.statut) + '%'"></div>
+        </div>
+      </div>
+    </div>
+
+    <div *ngIf="dossier.statut === 'PROGRAMME' || dossier.statut === 'TERMINE'" class="bg-white rounded-2xl shadow-md p-6">
+      <h2 class="font-semibold text-gray-800 mb-4">📅 Détails du stage</h2>
+      <div class="space-y-3">
+        <div class="flex justify-between py-2 border-b">
+          <span class="text-gray-600">Direction</span>
+          <span class="font-medium text-gray-800">{{ dossier.direction || 'En attente' }}</span>
+        </div>
+        <div class="flex justify-between py-2 border-b">
+          <span class="text-gray-600">Service</span>
+          <span class="font-medium text-gray-800">{{ dossier.service || 'En attente' }}</span>
+        </div>
+        <div class="flex justify-between py-2 border-b">
+          <span class="text-gray-600">Période</span>
+          <span class="font-medium text-gray-800">{{ dossier.dateDebut || 'À définir' }} → {{ dossier.dateFin || 'À définir' }}</span>
+        </div>
+      </div>
+    </div>
+
+    <div *ngIf="dossier.statut === 'TERMINE'" class="bg-green-50 rounded-2xl p-6 text-center border border-green-200">
+      <div class="text-5xl mb-4">🎓</div>
+      <h3 class="text-lg font-bold text-green-800 mb-2">Stage terminé !</h3>
+      <p class="text-green-700 mb-4">Votre attestation de stage est prête à être téléchargée.</p>
+      <button (click)="genererAttestation()" 
+              class="px-6 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition">
+        📄 Télécharger l'attestation
+      </button>
+    </div>
+  </div>
+</div>

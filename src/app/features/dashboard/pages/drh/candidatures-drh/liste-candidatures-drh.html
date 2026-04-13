@@ -1,0 +1,84 @@
+<div class="p-6">
+  <div class="flex justify-between items-center mb-6">
+    <h1 class="text-2xl font-bold text-gray-800">👔 Candidatures à traiter (DRH)</h1>
+    <button (click)="chargerCandidatures()" class="px-4 py-2 bg-sky-600 text-white rounded-lg hover:bg-sky-700">
+      🔄 Actualiser
+    </button>
+  </div>
+
+  <div *ngIf="isLoading" class="flex justify-center py-12">
+    <div class="loader"></div>
+  </div>
+
+  <div *ngIf="!isLoading && candidatures.length === 0" class="bg-white rounded-xl p-8 text-center">
+    <div class="text-5xl mb-4">📭</div>
+    <p class="text-gray-500">Aucune candidature en attente de validation DRH</p>
+  </div>
+
+  <div *ngIf="!isLoading && candidatures.length > 0" class="space-y-4">
+    <div *ngFor="let c of candidatures" class="bg-white rounded-xl shadow-md p-5 border border-gray-100">
+      <div class="flex justify-between items-start">
+        <div class="flex-1">
+          <div class="flex items-center space-x-3 mb-2">
+            <span class="text-xl">👤</span>
+            <h3 class="font-semibold text-gray-800">{{ c.prenom }} {{ c.nom }}</h3>
+            <span class="px-2 py-1 text-xs rounded-full" [ngClass]="getStatutClass(c.statutCandidature)">
+              {{ c.statutCandidature }}
+            </span>
+          </div>
+          <div class="grid grid-cols-2 gap-2 text-sm text-gray-600 ml-8">
+            <p>📧 {{ c.email }}</p>
+            <p>📞 {{ c.telephone || 'Non renseigné' }}</p>
+            <p>🏫 {{ c.universite }}</p>
+            <p>📅 {{ c.dateDepot }}</p>
+          </div>
+          <div class="mt-2 ml-8 text-sm text-gray-500">
+            <p>🎓 {{ c.filiere || 'Non renseigné' }} - {{ c.anneeEtude || '' }}</p>
+            <p>📅 Période souhaitée: {{ c.periodeSouhaitee || 'Non renseignée' }}</p>
+            <p *ngIf="c.commentaireSecretariat" class="text-yellow-600">📝 Secrétariat: {{ c.commentaireSecretariat }}</p>
+          </div>
+          <div class="flex gap-3 mt-3 ml-8">
+            <button (click)="telechargerDocument(c.id, 'cv')" 
+                    class="text-sm text-sky-600 hover:underline">📄 CV</button>
+            <button (click)="telechargerDocument(c.id, 'lettre')" 
+                    class="text-sm text-sky-600 hover:underline">📝 Lettre</button>
+          </div>
+        </div>
+        <div class="flex gap-2">
+          <button (click)="ouvrirModal(c, 'valider')" 
+                  class="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 text-sm">
+            ✅ Accepter
+          </button>
+          <button (click)="ouvrirModal(c, 'rejeter')" 
+                  class="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 text-sm">
+            ❌ Refuser
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal -->
+  <div *ngIf="showModal" class="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
+    <div class="bg-white rounded-xl p-6 w-full max-w-md">
+      <h3 class="text-xl font-bold mb-4">
+        {{ actionType === 'valider' ? '✅ Accepter la candidature' : '❌ Refuser la candidature' }}
+      </h3>
+      <p class="text-gray-600 mb-4">
+        {{ actionType === 'valider' ? 'Confirmez-vous l\'acceptation de cette candidature ?' : 'Veuillez indiquer le motif du refus.' }}
+      </p>
+      <textarea *ngIf="actionType === 'rejeter'" 
+                [(ngModel)]="commentaire" 
+                placeholder="Motif du refus..."
+                class="w-full p-3 border border-gray-300 rounded-lg mb-4" rows="3"></textarea>
+      <div class="flex justify-end gap-3">
+        <button (click)="fermerModal()" class="px-4 py-2 bg-gray-300 rounded-lg hover:bg-gray-400">Annuler</button>
+        <button (click)="confirmer()" 
+                [ngClass]="actionType === 'valider' ? 'bg-green-600 hover:bg-green-700' : 'bg-red-600 hover:bg-red-700'"
+                class="px-4 py-2 text-white rounded-lg">
+          {{ actionType === 'valider' ? 'Accepter' : 'Refuser' }}
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

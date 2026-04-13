@@ -1,0 +1,62 @@
+<div class="min-h-screen bg-gradient-to-br from-sky-900 via-sky-800 to-sky-900 relative overflow-hidden">
+  
+  <div class="absolute inset-0 bg-cover bg-center bg-no-repeat"
+       style="background-image: linear-gradient(135deg, rgba(0,0,0,0.7), rgba(0,0,0,0.5)), url('images/onam.jpg'); background-size: cover;">
+  </div>
+
+  <div class="relative z-10 container mx-auto px-4 py-8 max-w-md">
+    
+    <div class="flex justify-center mb-8">
+      <div class="text-center">
+        <img src="images/logo-onama.png.webp" class="h-16 mx-auto mb-2">
+        <h1 class="text-2xl font-bold text-white">ONAMA FLOW</h1>
+        <p class="text-sky-200 text-sm">Système de gestion des stages</p>
+      </div>
+    </div>
+    
+    <div class="bg-white/10 backdrop-blur-md rounded-2xl shadow-xl overflow-hidden border border-white/20">
+      <div class="bg-gradient-to-r from-sky-600 to-sky-700 px-6 py-4">
+        <h2 class="text-white font-semibold text-center">Connexion</h2>
+      </div>
+      
+      <div class="p-6">
+        <div *ngIf="error" class="mb-4 p-3 bg-red-500/80 text-white rounded-lg text-sm">{{ error }}</div>
+        
+        <div class="space-y-4">
+          <div>
+            <label class="block text-sm font-medium text-white/80 mb-1">Email</label>
+            <input type="email" [(ngModel)]="email" class="w-full px-4 py-2.5 border border-white/30 rounded-xl bg-white/20 text-white">
+          </div>
+          
+          <div class="relative">
+            <label class="block text-sm font-medium text-white/80 mb-1">Mot de passe</label>
+            <input [type]="showPassword ? 'text' : 'password'" [(ngModel)]="password" class="w-full px-4 py-2.5 border border-white/30 rounded-xl bg-white/20 text-white">
+            <button type="button" (click)="togglePassword()" class="absolute right-3 top-9 text-white/50 hover:text-white">
+              {{ showPassword ? '🙈' : '👁️' }}
+            </button>
+          </div>
+          
+          <div class="flex items-center justify-between">
+            <label class="flex items-center space-x-2">
+              <input type="checkbox" [(ngModel)]="rememberMe" class="rounded">
+              <span class="text-sm text-white/70">Se souvenir de moi</span>
+            </label>
+            <a href="#" class="text-sm text-sky-300">Mot de passe oublié ?</a>
+          </div>
+          
+          <button (click)="login()" [disabled]="isLoading"
+                  class="w-full py-2.5 bg-gradient-to-r from-sky-500 to-sky-600 text-white rounded-xl font-medium hover:from-sky-600 hover:to-sky-700 transition">
+            {{ isLoading ? 'Chargement...' : 'Se connecter' }}
+          </button>
+        </div>
+        
+        <div class="text-center mt-6 pt-4 border-t border-white/20">
+          <p class="text-white/70 text-sm">
+            Pas encore de compte ?
+            <a routerLink="/inscription" class="text-sky-300 hover:text-sky-200">Créer un compte</a>
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,49 @@
+:host {
+  display: block;
+}
+
+.animate-pulse {
+  animation: pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 0.3;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.5;
+    transform: scale(1.05);
+  }
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-slideDown {
+  animation: slideDown 0.3s ease-out;
+}
+
+// Style pour les champs de formulaire
+input, select, textarea {
+  transition: all 0.2s ease;
+  
+  &:focus {
+    outline: none;
+  }
+}
+
+// Style pour les fichiers upload
+input[type="file"] {
+  &::file-selector-button {
+    transition: all 0.2s ease;
+  }
+}

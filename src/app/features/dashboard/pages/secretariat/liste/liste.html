@@ -1,0 +1,414 @@
+<div class="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 p-6">
+  <div class="max-w-7xl mx-auto">
+    
+    <!-- En-tête -->
+    <div class="mb-8">
+      <div class="flex flex-col md:flex-row md:items-center md:justify-between">
+        <div class="flex items-center space-x-4">
+          <div class="h-14 w-14 bg-gradient-to-br from-blue-700 to-blue-800 rounded-2xl flex items-center justify-center shadow-lg">
+            <img src="images/logo-onama.png.webp" class="h-10 w-10 object-contain">
+          </div>
+          <div>
+            <h1 class="text-3xl font-bold bg-gradient-to-r from-gray-800 to-gray-600 bg-clip-text text-transparent">
+              Liste des stagiaires
+            </h1>
+            <p class="text-gray-500 mt-1">Gestion des dossiers de stage</p>
+          </div>
+        </div>
+        <div class="mt-2 md:mt-0">
+          <div class="flex items-center space-x-2 text-gray-400 text-sm">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+            </svg>
+            <span>Mise à jour en temps réel</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Cartes statistiques -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 mb-8">
+      <div class="bg-white rounded-2xl shadow-sm p-5">
+        <div class="flex items-center justify-between">
+          <div>
+            <p class="text-sm text-gray-500">Total stagiaires</p>
+            <p class="text-3xl font-bold text-blue-600 mt-1">{{ stats.total }}</p>
+          </div>
+          <div class="h-12 w-12 bg-blue-100 rounded-xl flex items-center justify-center">
+            <svg class="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"></path>
+            </svg>
+          </div>
+        </div>
+      </div>
+
+      <div class="bg-white rounded-2xl shadow-sm p-5">
+        <div class="flex items-center justify-between">
+          <div>
+            <p class="text-sm text-gray-500">Dépôts</p>
+            <p class="text-3xl font-bold text-amber-600 mt-1">{{ stats.depot }}</p>
+          </div>
+          <div class="h-12 w-12 bg-amber-100 rounded-xl flex items-center justify-center">
+            <svg class="w-6 h-6 text-amber-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+            </svg>
+          </div>
+        </div>
+      </div>
+
+      <div class="bg-white rounded-2xl shadow-sm p-5">
+        <div class="flex items-center justify-between">
+          <div>
+            <p class="text-sm text-gray-500">Validés</p>
+            <p class="text-3xl font-bold text-green-600 mt-1">{{ stats.valide }}</p>
+          </div>
+          <div class="h-12 w-12 bg-green-100 rounded-xl flex items-center justify-center">
+            <svg class="w-6 h-6 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+            </svg>
+          </div>
+        </div>
+      </div>
+
+      <div class="bg-white rounded-2xl shadow-sm p-5">
+        <div class="flex items-center justify-between">
+          <div>
+            <p class="text-sm text-gray-500">Terminés</p>
+            <p class="text-3xl font-bold text-gray-600 mt-1">{{ stats.termine }}</p>
+          </div>
+          <div class="h-12 w-12 bg-gray-100 rounded-xl flex items-center justify-center">
+            <svg class="w-6 h-6 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+            </svg>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Types de stage -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-5 mb-8">
+      <div class="bg-gradient-to-r from-indigo-50 to-indigo-100 rounded-xl p-4">
+        <div class="flex items-center justify-between">
+          <div class="flex items-center space-x-3">
+            <div class="h-10 w-10 bg-indigo-500 rounded-xl flex items-center justify-center">
+              <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path d="M12 14l9-5-9-5-9 5 9 5z"></path>
+                <path d="M12 14l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14z"></path>
+              </svg>
+            </div>
+            <div>
+              <p class="text-xs text-indigo-600">Stagiaires Académiques</p>
+              <p class="text-2xl font-bold text-indigo-700">{{ stats.academique }}</p>
+            </div>
+          </div>
+          <div class="text-right">
+            <p class="text-xs text-indigo-500">{{ stats.total ? (stats.academique / stats.total * 100).toFixed(0) : 0 }}% du total</p>
+          </div>
+        </div>
+      </div>
+      <div class="bg-gradient-to-r from-fuchsia-50 to-fuchsia-100 rounded-xl p-4">
+        <div class="flex items-center justify-between">
+          <div class="flex items-center space-x-3">
+            <div class="h-10 w-10 bg-fuchsia-500 rounded-xl flex items-center justify-center">
+              <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
+              </svg>
+            </div>
+            <div>
+              <p class="text-xs text-fuchsia-600">Stagiaires Perfectionnement</p>
+              <p class="text-2xl font-bold text-fuchsia-700">{{ stats.perfectionnement }}</p>
+            </div>
+          </div>
+          <div class="text-right">
+            <p class="text-xs text-fuchsia-500">{{ stats.total ? (stats.perfectionnement / stats.total * 100).toFixed(0) : 0 }}% du total</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Message -->
+    <div *ngIf="message" 
+         class="mb-6 p-4 rounded-xl flex items-center space-x-3"
+         [ngClass]="{
+           'bg-green-50 text-green-700 border border-green-200': messageType === 'success',
+           'bg-red-50 text-red-700 border border-red-200': messageType === 'error'
+         }">
+      <span class="text-xl">{{ messageType === 'success' ? '✅' : '❌' }}</span>
+      <span class="flex-1">{{ message }}</span>
+      <button (click)="message = ''" class="hover:opacity-70">✖️</button>
+    </div>
+
+    <!-- Recherche -->
+    <div class="bg-white rounded-2xl shadow-sm p-4 mb-6">
+      <div class="flex flex-col md:flex-row gap-4">
+        <div class="flex-1 relative">
+          <svg class="absolute left-4 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+          </svg>
+          <input type="text" [(ngModel)]="searchTerm" placeholder="Rechercher..." class="w-full pl-12 pr-4 py-3 border border-gray-200 rounded-xl">
+        </div>
+        <div class="w-full md:w-64">
+          <select [(ngModel)]="filtreStatut" class="w-full px-4 py-3 border border-gray-200 rounded-xl">
+            <option value="TOUS">Tous les statuts</option>
+            <option value="DEPOT">En attente (DEPOT)</option>
+            <option value="VALIDE">Validés (VALIDE)</option>
+            <option value="PROGRAMME">Programmés (PROGRAMME)</option>
+            <option value="TERMINE">Terminés (TERMINE)</option>
+          </select>
+        </div>
+        <button (click)="rafraichir()" class="px-5 py-3 bg-gray-100 text-gray-600 rounded-xl hover:bg-gray-200">
+          🔄 Rafraîchir
+        </button>
+      </div>
+    </div>
+
+    <!-- Chargement -->
+    <div *ngIf="isLoading" class="flex justify-center items-center py-12">
+      <div class="loader"></div>
+      <span class="ml-3 text-gray-500">Chargement...</span>
+    </div>
+
+    <!-- Tableau -->
+    <div *ngIf="!isLoading" class="bg-white rounded-2xl shadow-sm overflow-hidden">
+      <div class="overflow-x-auto">
+        <table class="w-full">
+          <thead class="bg-gray-50 border-b">
+            <tr>
+              <th class="px-6 py-4 text-left text-xs font-semibold text-gray-500">Stagiaire</th>
+              <th class="px-6 py-4 text-left text-xs font-semibold text-gray-500">Contact</th>
+              <th class="px-6 py-4 text-left text-xs font-semibold text-gray-500">Université</th>
+              <th class="px-6 py-4 text-left text-xs font-semibold text-gray-500">Type</th>
+              <th class="px-6 py-4 text-left text-xs font-semibold text-gray-500">Statut</th>
+              <th class="px-6 py-4 text-center text-xs font-semibold text-gray-500">Actions</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-gray-100">
+            <tr *ngFor="let s of stagiairesFiltres" class="hover:bg-gray-50">
+              <td class="px-6 py-4">
+                <div class="flex items-center space-x-3">
+                  <div class="h-10 w-10 rounded-full bg-gradient-to-br from-blue-100 to-blue-200 flex items-center justify-center text-blue-600 font-bold">
+                    {{ getInitiales(s.nom, s.prenom) }}
+                  </div>
+                  <div>
+                    <p class="font-medium text-gray-900">{{ s.nom }} {{ s.prenom }}</p>
+                    <p class="text-xs text-gray-400">ID: {{ s.id }}</p>
+                  </div>
+                </div>
+              </td>
+              <td class="px-6 py-4">
+                <p class="text-sm text-gray-600">{{ s.telephone || 'Non renseigné' }}</p>
+                <p class="text-xs text-gray-400">{{ s.dateDepot }}</p>
+              </td>
+              <td class="px-6 py-4">
+                <span class="text-sm text-gray-600">{{ s.universite || 'Non renseignée' }}</span>
+              </td>
+              <td class="px-6 py-4">
+                <span class="px-2 py-1 text-xs rounded-full" [ngClass]="s.type === 'ACADEMIQUE' ? 'bg-indigo-100 text-indigo-700' : 'bg-fuchsia-100 text-fuchsia-700'">
+                  {{ s.type === 'ACADEMIQUE' ? '🎓 Académique' : '📈 Perfectionnement' }}
+                </span>
+              </td>
+              <td class="px-6 py-4">
+                <span class="px-2 py-1 text-xs rounded-full" [ngClass]="{
+                  'bg-amber-100 text-amber-700': s.statut === 'DEPOT',
+                  'bg-green-100 text-green-700': s.statut === 'VALIDE',
+                  'bg-purple-100 text-purple-700': s.statut === 'PROGRAMME',
+                  'bg-gray-100 text-gray-700': s.statut === 'TERMINE'
+                }">
+                  {{ s.statut }}
+                </span>
+              </td>
+              <td class="px-6 py-4">
+                <div class="flex items-center justify-center gap-2">
+                  <button (click)="ouvrirDetails(s)" class="p-2 text-gray-400 hover:text-blue-600 rounded-lg hover:bg-blue-50" title="Voir">👁️</button>
+                  <button (click)="ouvrirModalModifier(s)" class="p-2 text-gray-400 hover:text-amber-600 rounded-lg hover:bg-amber-50" title="Modifier">✏️</button>
+                  <button (click)="ouvrirConfirmationSuppression(s)" class="p-2 text-gray-400 hover:text-red-600 rounded-lg hover:bg-red-50" title="Supprimer">🗑️</button>
+                </div>
+              </td>
+            </tr>
+            <tr *ngIf="stagiairesFiltres.length === 0">
+              <td colspan="6" class="px-6 py-12 text-center text-gray-400">
+                Aucun stagiaire trouvé
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      
+      <div class="px-6 py-4 border-t bg-gray-50 flex justify-between items-center">
+        <p class="text-xs text-gray-500">{{ stagiairesFiltres.length }} stagiaire(s)</p>
+        <button (click)="exporterCSV()" class="text-xs text-blue-600 hover:text-blue-700">📎 Exporter CSV</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================ -->
+<!-- MODAL DÉTAILS STAGIAIRE -->
+<!-- ============================================ -->
+<div *ngIf="showDetailsModal" class="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
+  <div class="bg-white rounded-2xl shadow-2xl w-full max-w-md">
+    <div class="bg-gradient-to-r from-blue-600 to-sky-500 px-6 py-4 rounded-t-2xl">
+      <div class="flex justify-between items-center">
+        <div class="flex items-center space-x-2">
+          <span class="text-2xl">👤</span>
+          <h3 class="text-lg font-bold text-white">Fiche stagiaire</h3>
+        </div>
+        <button (click)="fermerDetails()" class="text-white hover:text-gray-200 text-xl">✖️</button>
+      </div>
+    </div>
+    
+    <div class="p-6">
+      <div class="flex justify-center mb-4">
+        <div class="h-24 w-24 rounded-full bg-gradient-to-br from-blue-100 to-blue-200 flex items-center justify-center">
+          <span class="text-4xl font-bold text-blue-600">{{ getInitiales(stagiaireDetails?.nom, stagiaireDetails?.prenom) }}</span>
+        </div>
+      </div>
+      
+      <div class="space-y-3">
+        <div class="flex justify-between items-center border-b pb-2">
+          <span class="text-sm text-gray-500">Identifiant</span>
+          <span class="font-medium text-gray-800">#{{ stagiaireDetails?.id }}</span>
+        </div>
+        <div class="flex justify-between items-center border-b pb-2">
+          <span class="text-sm text-gray-500">Nom complet</span>
+          <span class="font-medium text-gray-800">{{ stagiaireDetails?.nom }} {{ stagiaireDetails?.prenom }}</span>
+        </div>
+        <div class="flex justify-between items-center border-b pb-2">
+          <span class="text-sm text-gray-500">Email</span>
+          <span class="font-medium text-gray-800">{{ stagiaireDetails?.email || 'Non renseigné' }}</span>
+        </div>
+        <div class="flex justify-between items-center border-b pb-2">
+          <span class="text-sm text-gray-500">Téléphone</span>
+          <span class="font-medium text-gray-800">{{ stagiaireDetails?.telephone || 'Non renseigné' }}</span>
+        </div>
+        <div class="flex justify-between items-center border-b pb-2">
+          <span class="text-sm text-gray-500">Université</span>
+          <span class="font-medium text-gray-800">{{ stagiaireDetails?.universite || 'Non renseignée' }}</span>
+        </div>
+        <div class="flex justify-between items-center border-b pb-2">
+          <span class="text-sm text-gray-500">Type de stage</span>
+          <span class="px-2 py-1 text-xs rounded-full" [ngClass]="stagiaireDetails?.type === 'ACADEMIQUE' ? 'bg-indigo-100 text-indigo-700' : 'bg-fuchsia-100 text-fuchsia-700'">
+            {{ stagiaireDetails?.type === 'ACADEMIQUE' ? '🎓 Académique' : '📈 Perfectionnement' }}
+          </span>
+        </div>
+        <div class="flex justify-between items-center border-b pb-2">
+          <span class="text-sm text-gray-500">Statut</span>
+          <span class="px-2 py-1 text-xs rounded-full" [ngClass]="{
+            'bg-amber-100 text-amber-700': stagiaireDetails?.statut === 'DEPOT',
+            'bg-green-100 text-green-700': stagiaireDetails?.statut === 'VALIDE',
+            'bg-purple-100 text-purple-700': stagiaireDetails?.statut === 'PROGRAMME',
+            'bg-gray-100 text-gray-700': stagiaireDetails?.statut === 'TERMINE'
+          }">
+            {{ stagiaireDetails?.statut }}
+          </span>
+        </div>
+        <div class="flex justify-between items-center">
+          <span class="text-sm text-gray-500">Date de dépôt</span>
+          <span class="font-medium text-gray-800">{{ stagiaireDetails?.dateDepot || 'Non renseignée' }}</span>
+        </div>
+      </div>
+      
+      <div class="mt-6">
+        <button (click)="fermerDetails()" class="w-full py-2 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 transition">
+          Fermer
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================ -->
+<!-- MODAL MODIFICATION -->
+<!-- ============================================ -->
+<div *ngIf="showEditModal" class="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
+  <div class="bg-white rounded-2xl shadow-2xl w-full max-w-md">
+    <div class="bg-gradient-to-r from-amber-600 to-orange-600 px-6 py-4 rounded-t-2xl">
+      <div class="flex justify-between items-center">
+        <div class="flex items-center space-x-2">
+          <span class="text-2xl">✏️</span>
+          <h3 class="text-lg font-bold text-white">Modifier le stagiaire</h3>
+        </div>
+        <button (click)="fermerModal()" class="text-white hover:text-gray-200 text-xl">✖️</button>
+      </div>
+    </div>
+    
+    <div class="p-6 space-y-4">
+      <div>
+        <label class="block text-sm font-medium text-gray-700 mb-1">Nom</label>
+        <input type="text" [(ngModel)]="stagiaireEdit.nom" 
+               class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500">
+      </div>
+      <div>
+        <label class="block text-sm font-medium text-gray-700 mb-1">Prénom</label>
+        <input type="text" [(ngModel)]="stagiaireEdit.prenom" 
+               class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500">
+      </div>
+      <div>
+        <label class="block text-sm font-medium text-gray-700 mb-1">Téléphone</label>
+        <input type="text" [(ngModel)]="stagiaireEdit.telephone" 
+               class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500">
+      </div>
+      <div>
+        <label class="block text-sm font-medium text-gray-700 mb-1">Université</label>
+        <input type="text" [(ngModel)]="stagiaireEdit.universite" 
+               class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500">
+      </div>
+      <div>
+        <label class="block text-sm font-medium text-gray-700 mb-1">Type de stage</label>
+        <select [(ngModel)]="stagiaireEdit.type" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500">
+          <option value="ACADEMIQUE">🎓 Académique</option>
+          <option value="PERFECTIONNEMENT">📈 Perfectionnement</option>
+        </select>
+      </div>
+      
+      <div class="flex gap-3 pt-4">
+        <button (click)="enregistrerModification()" 
+                class="flex-1 py-2 bg-amber-600 text-white rounded-lg hover:bg-amber-700 transition">
+          💾 Enregistrer
+        </button>
+        <button (click)="fermerModal()" 
+                class="px-4 py-2 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 transition">
+          Annuler
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================ -->
+<!-- MODAL CONFIRMATION SUPPRESSION -->
+<!-- ============================================ -->
+<div *ngIf="showDeleteModal" class="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
+  <div class="bg-white rounded-2xl shadow-2xl w-full max-w-md">
+    <div class="bg-gradient-to-r from-red-600 to-rose-600 px-6 py-4 rounded-t-2xl">
+      <div class="flex justify-between items-center">
+        <div class="flex items-center space-x-2">
+          <span class="text-2xl">⚠️</span>
+          <h3 class="text-lg font-bold text-white">Confirmation de suppression</h3>
+        </div>
+        <button (click)="fermerConfirmationSuppression()" class="text-white hover:text-gray-200 text-xl">✖️</button>
+      </div>
+    </div>
+    
+    <div class="p-6 text-center">
+      <div class="text-6xl mb-4">🗑️</div>
+      <p class="text-gray-700 mb-2">Êtes-vous sûr de vouloir supprimer ce stagiaire ?</p>
+      <div class="bg-gray-50 rounded-lg p-3 mb-4">
+        <p class="font-medium text-gray-800">{{ stagiaireDelete?.nom }} {{ stagiaireDelete?.prenom }}</p>
+        <p class="text-xs text-gray-500">ID: #{{ stagiaireDelete?.id }}</p>
+      </div>
+      <p class="text-sm text-red-600 mb-4">⚠️ Cette action est IRRÉVERSIBLE</p>
+      
+      <div class="flex gap-3">
+        <button (click)="confirmerSuppression()" 
+                class="flex-1 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition">
+          ✅ Oui, supprimer
+        </button>
+        <button (click)="fermerConfirmationSuppression()" 
+                class="flex-1 py-2 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 transition">
+          Annuler
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

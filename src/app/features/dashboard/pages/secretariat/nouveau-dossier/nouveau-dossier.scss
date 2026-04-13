@@ -1,0 +1,56 @@
+:host {
+  display: block;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fadeIn {
+  animation: fadeIn 0.5s ease-out;
+}
+
+.animate-slideDown {
+  animation: slideDown 0.3s ease-out;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.animate-spin {
+  animation: spin 1s linear infinite;
+}
+
+// Radio button personnalisé
+input[type="radio"]:checked + div {
+  border-color: #3b82f6;
+}
+
+// Effet focus sur les inputs
+input:focus {
+  outline: none;
+}
+
+// Transition pour les cartes
+.bg-white {
+  transition: all 0.3s ease;
+}

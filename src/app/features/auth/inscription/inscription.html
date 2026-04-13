@@ -1,0 +1,109 @@
+<div class="min-h-screen flex items-center justify-center p-4 relative overflow-hidden bg-cover bg-center bg-no-repeat" 
+     style="background-image: linear-gradient(135deg, rgba(0,0,0,0.6), rgba(0,0,0,0.4)), url('images/onam.jpg'); background-size: cover; background-position: center;">
+  
+  <div class="absolute top-0 right-0 w-64 h-64 bg-sky-500/15 rounded-full blur-3xl"></div>
+  <div class="absolute bottom-0 left-0 w-64 h-64 bg-blue-500/15 rounded-full blur-3xl"></div>
+
+  <div class="relative z-10 w-full max-w-sm">
+    <div class="bg-white/90 backdrop-blur-sm rounded-xl shadow-2xl overflow-hidden">
+      
+      <!-- En-tête compact -->
+      <div class="bg-gradient-to-r from-sky-700 to-sky-600 py-5 px-6 text-white text-center">
+        <img src="images/logo-onama.png.webp" class="h-10 mx-auto mb-2">
+        <h1 class="text-lg font-bold">ONAMA FLOW</h1>
+        <p class="text-xs text-sky-200">Créer un compte étudiant</p>
+      </div>
+
+      <!-- Formulaire compact -->
+      <div class="p-5">
+        
+        <div *ngIf="message" 
+             class="mb-3 p-2 rounded-lg text-xs text-center animate-slideDown"
+             [ngClass]="{
+               'bg-green-50 text-green-700 border border-green-200': messageType === 'success',
+               'bg-red-50 text-red-700 border border-red-200': messageType === 'error'
+             }">
+          {{ message }}
+        </div>
+
+        <form (ngSubmit)="inscription()" class="space-y-3">
+          
+          <!-- Nom et Prénom sur 2 colonnes -->
+          <div class="grid grid-cols-2 gap-2">
+            <input type="text" [(ngModel)]="form.nom" name="nom" required
+                   class="w-full px-3 py-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-sky-500 text-sm bg-white/80"
+                   placeholder="Nom">
+            <input type="text" [(ngModel)]="form.prenom" name="prenom" required
+                   class="w-full px-3 py-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-sky-500 text-sm bg-white/80"
+                   placeholder="Prénom">
+          </div>
+
+          <!-- Email -->
+          <input type="email" [(ngModel)]="form.email" name="email" required
+                 class="w-full px-3 py-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-sky-500 text-sm bg-white/80"
+                 placeholder="Email">
+
+          <!-- Téléphone -->
+          <input type="tel" [(ngModel)]="form.telephone" name="telephone"
+                 class="w-full px-3 py-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-sky-500 text-sm bg-white/80"
+                 placeholder="Téléphone (optionnel)">
+
+          <!-- Université -->
+          <input type="text" [(ngModel)]="form.universite" name="universite" required
+                 class="w-full px-3 py-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-sky-500 text-sm bg-white/80"
+                 placeholder="Université / Établissement">
+
+          <!-- Mot de passe -->
+          <div class="relative">
+            <input [type]="showPassword ? 'text' : 'password'" [(ngModel)]="form.password" name="password" required
+                   class="w-full px-3 py-2 pr-8 border border-gray-200 rounded-lg focus:ring-2 focus:ring-sky-500 text-sm bg-white/80"
+                   placeholder="Mot de passe (min 6 caractères)">
+            <button type="button" (click)="togglePassword()"
+                    class="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-400">
+              <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path *ngIf="!showPassword" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>
+                <path *ngIf="showPassword" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.88 9.88l-3.29-3.29m7.532 7.532l3.29 3.29M3 3l3.59 3.59"></path>
+              </svg>
+            </button>
+          </div>
+
+          <!-- Confirmation mot de passe -->
+          <div class="relative">
+            <input [type]="showConfirmPassword ? 'text' : 'password'" [(ngModel)]="form.confirmPassword" name="confirmPassword" required
+                   class="w-full px-3 py-2 pr-8 border border-gray-200 rounded-lg focus:ring-2 focus:ring-sky-500 text-sm bg-white/80"
+                   [class.border-red-300]="form.confirmPassword && !passwordMatch"
+                   [class.border-green-300]="form.confirmPassword && passwordMatch"
+                   placeholder="Confirmer le mot de passe">
+            <button type="button" (click)="toggleConfirmPassword()"
+                    class="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-400">
+              <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path *ngIf="!showConfirmPassword" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>
+                <path *ngIf="showConfirmPassword" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.88 9.88l-3.29-3.29m7.532 7.532l3.29 3.29M3 3l3.59 3.59"></path>
+              </svg>
+            </button>
+          </div>
+          <div *ngIf="form.confirmPassword && !passwordMatch" class="text-xs text-red-500 -mt-1">Ne correspond pas</div>
+
+          <!-- Bouton -->
+          <button type="submit" [disabled]="isLoading || !formulaireValide"
+                  class="w-full py-2 bg-gradient-to-r from-sky-600 to-sky-500 text-white rounded-lg font-medium hover:from-sky-700 hover:to-sky-600 transition text-sm disabled:opacity-50">
+            {{ isLoading ? 'Inscription...' : 'Créer mon compte' }}
+          </button>
+
+          <!-- Lien connexion -->
+          <div class="text-center pt-1">
+            <span class="text-xs text-gray-500">Déjà un compte ?</span>
+            <button type="button" (click)="allerVersLogin()" class="ml-1 text-xs text-sky-600 hover:text-sky-700 font-medium">
+              Se connecter
+            </button>
+          </div>
+        </form>
+
+        <!-- Pied de page -->
+        <div class="mt-3 text-center border-t border-gray-100 pt-2">
+          <p class="text-[10px] text-gray-400">Office National des Médias Audiovisuels - République du Tchad</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

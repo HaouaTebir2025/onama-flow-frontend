@@ -1,0 +1,361 @@
+<div class="landing-container">
+  
+  <!-- ============================================ -->
+  <!-- NAVIGATION BAR -->
+  <!-- ============================================ -->
+  <nav class="navbar">
+    <div class="container">
+      <div class="nav-content">
+        <div class="logo">
+          <div class="logo-icon">
+            <img src="images/logo-onama.png.webp" alt="ONAMA">
+          </div>
+          <div class="logo-text">
+            <span class="logo-title">ONAMA FLOW</span>
+            <span class="logo-subtitle">Système de gestion des stages</span>
+          </div>
+        </div>
+        
+        <div class="nav-links" [class.active]="isMenuOpen">
+          <a (click)="scrollToSection('accueil')">Accueil</a>
+          <a (click)="scrollToSection('directions')">Directions</a>
+          <a (click)="scrollToSection('services')">Services</a>
+          <a (click)="scrollToSection('actualites')">Actualités</a>
+          <a (click)="scrollToSection('contact')">Contact</a>
+        </div>
+        
+        <div class="nav-buttons">
+          <a routerLink="/login" class="btn-outline">Connexion</a>
+          <a routerLink="/inscription" class="btn-primary">Inscription</a>
+          <a routerLink="/etudiant/depot" class="btn-success">📄 Déposer ma candidature</a>
+          <button class="mobile-menu-btn" (click)="toggleMenu()">☰</button>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ============================================ -->
+  <!-- HERO SECTION -->
+  <!-- ============================================ -->
+  <section id="accueil" class="hero">
+    <div class="hero-overlay"></div>
+    <div class="hero-particles"></div>
+    <div class="container">
+      <div class="hero-grid">
+        <div class="hero-content">
+          <div class="hero-badge">
+            <span>🏆 Plateforme officielle</span>
+          </div>
+          <h1 class="hero-title">
+            Bienvenue sur
+            <span class="hero-title-gradient">ONAMA FLOW</span>
+          </h1>
+          <p class="hero-subtitle">
+            Système intégré de gestion des stages
+          </p>
+          <div class="hero-divider"></div>
+          <p class="hero-description">
+            Digitalisation complète du parcours des stagiaires,<br>
+            de l'enregistrement à la délivrance de l'attestation.
+          </p>
+          <div class="hero-buttons">
+            <a routerLink="/etudiant/depot" class="btn-hero-primary">
+              📄 Déposer ma candidature
+              <span class="btn-arrow">→</span>
+            </a>
+            <a routerLink="/suivi-public" class="btn-hero-secondary">
+              🔍 Suivre ma candidature
+            </a>
+          </div>
+          
+          <div class="hero-stats">
+            <div class="stat-item">
+              <div class="stat-number">{{ stats.stagiaires }}+</div>
+              <div class="stat-label">Stagiaires formés</div>
+            </div>
+            <div class="stat-divider"></div>
+            <div class="stat-item">
+              <div class="stat-number">{{ stats.directions }}</div>
+              <div class="stat-label">Directions</div>
+            </div>
+            <div class="stat-divider"></div>
+            <div class="stat-item">
+              <div class="stat-number">{{ stats.services }}+</div>
+              <div class="stat-label">Services</div>
+            </div>
+            <div class="stat-divider"></div>
+            <div class="stat-item">
+              <div class="stat-number">{{ stats.partenaires }}+</div>
+              <div class="stat-label">Partenaires</div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="hero-image">
+          <div class="hero-image-wrapper">
+            <div class="hero-image-glow"></div>
+            <img src="images/onam.jpg" alt="ONAMA">
+            <div class="hero-image-overlay"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================ -->
+  <!-- DIRECTIONS SECTION -->
+  <!-- ============================================ -->
+  <section id="directions" class="directions">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-badge">Nos Directions</span>
+        <h2 class="section-title">Découvrez nos <span class="highlight">directions</span></h2>
+        <p class="section-subtitle">
+          L'ONAMA compte 3 directions principales offrant des opportunités de stage variées
+        </p>
+      </div>
+      
+      <div class="directions-grid">
+        <div class="direction-card tv">
+          <div class="card-glow"></div>
+          <div class="card-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+            </svg>
+          </div>
+          <h3>Télévision Nationale</h3>
+          <p>Production et diffusion des programmes télévisés</p>
+          <div class="card-stats">
+            <span>📺 4 sous-directions</span>
+            <span>🎬 9 services</span>
+          </div>
+          <div class="card-hover-effect"></div>
+        </div>
+        
+        <div class="direction-card radio">
+          <div class="card-glow"></div>
+          <div class="card-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z"/>
+            </svg>
+          </div>
+          <h3>Radiodiffusion Nationale</h3>
+          <p>Production et diffusion des programmes radiophoniques</p>
+          <div class="card-stats">
+            <span>📻 4 sous-directions</span>
+            <span>🎙️ 9 services</span>
+          </div>
+          <div class="card-hover-effect"></div>
+        </div>
+        
+        <div class="direction-card com">
+          <div class="card-glow"></div>
+          <div class="card-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/>
+            </svg>
+          </div>
+          <h3>Communication Nationale</h3>
+          <p>Communication institutionnelle et relations publiques</p>
+          <div class="card-stats">
+            <span>📢 4 sous-directions</span>
+            <span>🤝 11 services</span>
+          </div>
+          <div class="card-hover-effect"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================ -->
+  <!-- SERVICES SECTION -->
+  <!-- ============================================ -->
+  <section id="services" class="services">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-badge">Nos Services</span>
+        <h2 class="section-title">Ce que nous <span class="highlight">proposons</span></h2>
+        <p class="section-subtitle">
+          Une plateforme complète pour une gestion optimale des stages
+        </p>
+      </div>
+      
+      <div class="services-grid">
+        <div class="service-card">
+          <div class="service-icon">📄</div>
+          <h3>Dépôt en ligne</h3>
+          <p>Déposez votre candidature en quelques clics, où que vous soyez</p>
+        </div>
+        <div class="service-card">
+          <div class="service-icon">📊</div>
+          <h3>Suivi en temps réel</h3>
+          <p>Suivez l'évolution de votre dossier à chaque étape</p>
+        </div>
+        <div class="service-card">
+          <div class="service-icon">✅</div>
+          <h3>Validation numérique</h3>
+          <p>Traitement rapide et transparent par nos équipes</p>
+        </div>
+        <div class="service-card">
+          <div class="service-icon">📅</div>
+          <h3>Planification</h3>
+          <p>Organisation optimale des plannings de stage</p>
+        </div>
+        <div class="service-card">
+          <div class="service-icon">⭐</div>
+          <h3>Évaluation</h3>
+          <p>Suivi personnalisé des performances des stagiaires</p>
+        </div>
+        <div class="service-card">
+          <div class="service-icon">📎</div>
+          <h3>Attestation PDF</h3>
+          <p>Génération automatique des attestations de stage</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================ -->
+  <!-- ACTUALITÉS SECTION -->
+  <!-- ============================================ -->
+  <section id="actualites" class="actualites">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-badge">Actualités</span>
+        <h2 class="section-title">Dernières <span class="highlight">actualités</span></h2>
+        <p class="section-subtitle">
+          Restez informé des dernières nouvelles de l'ONAMA
+        </p>
+      </div>
+      
+      <div class="actualites-grid">
+        <div class="actualite-card" *ngFor="let act of actualites">
+          <div class="actualite-icon">{{ act.icon }}</div>
+          <div class="actualite-content">
+            <div class="actualite-date">{{ act.date }}</div>
+            <h3>{{ act.titre }}</h3>
+            <p>{{ act.description }}</p>
+            <a href="#" class="actualite-link">En savoir plus →</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================ -->
+  <!-- TEMOIGNAGES SECTION -->
+  <!-- ============================================ -->
+  <section class="temoignages">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-badge">Témoignages</span>
+        <h2 class="section-title">Ce qu'ils <span class="highlight">disent</span></h2>
+        <p class="section-subtitle">
+          Ils nous ont fait confiance et partagent leur expérience
+        </p>
+      </div>
+      
+      <div class="temoignage-slider">
+        <div class="temoignage-card" *ngFor="let t of temoignages; let i = index" [class.active]="i === currentSlide">
+          <div class="temoignage-avatar">{{ t.avatar }}</div>
+          <div class="temoignage-message">
+            <p>"{{ t.message }}"</p>
+          </div>
+          <div class="temoignage-author">
+            <h4>{{ t.nom }}</h4>
+            <span>{{ t.poste }}</span>
+          </div>
+        </div>
+        
+        <div class="slider-dots">
+          <span *ngFor="let t of temoignages; let i = index" 
+                class="dot" 
+                [class.active]="i === currentSlide"
+                (click)="currentSlide = i"></span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================ -->
+  <!-- CTA SECTION -->
+  <!-- ============================================ -->
+  <section class="cta">
+    <div class="container">
+      <div class="cta-content">
+        <h2>Prêt à rejoindre l'ONAMA ?</h2>
+        <p>Déposez votre candidature dès maintenant et commencez votre parcours professionnel</p>
+        <div class="cta-buttons">
+          <a routerLink="/etudiant/depot" class="btn-cta-primary">📄 Déposer ma candidature</a>
+          <a routerLink="/suivi-public" class="btn-cta-secondary">🔍 Suivre ma candidature</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================ -->
+  <!-- FOOTER -->
+  <!-- ============================================ -->
+  <footer id="contact" class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <div class="footer-logo">
+            <img src="images/logo-onama.png.webp" alt="ONAMA">
+            <div>
+              <h3>ONAMA FLOW</h3>
+              <p>Système de gestion des stages</p>
+            </div>
+          </div>
+          <p class="footer-description">
+            Office National des Médias Audiovisuels<br>
+            République du Tchad
+          </p>
+          <div class="footer-social">
+            <a href="#" class="social-link">📘</a>
+            <a href="#" class="social-link">🐦</a>
+            <a href="#" class="social-link">📸</a>
+            <a href="#" class="social-link">💼</a>
+          </div>
+        </div>
+        
+        <div class="footer-links">
+          <h4>Liens rapides</h4>
+          <ul>
+            <li><a (click)="scrollToSection('accueil')">Accueil</a></li>
+            <li><a (click)="scrollToSection('directions')">Directions</a></li>
+            <li><a (click)="scrollToSection('services')">Services</a></li>
+            <li><a (click)="scrollToSection('actualites')">Actualités</a></li>
+          </ul>
+        </div>
+        
+        <div class="footer-links">
+          <h4>Services</h4>
+          <ul>
+            <li><a routerLink="/etudiant/depot">Déposer une candidature</a></li>
+            <li><a routerLink="/suivi-public">Suivre ma candidature</a></li>
+            <li><a routerLink="/login">Espace gestionnaire</a></li>
+          </ul>
+        </div>
+        
+        <div class="footer-contact">
+          <h4>Contact</h4>
+          <ul>
+            <li>📍 N'Djamena, Tchad</li>
+            <li>📞 +235 XX XX XX XX</li>
+            <li>📧 contact@onama.td</li>
+          </ul>
+        </div>
+      </div>
+      
+      <div class="footer-bottom">
+        <p>&copy; {{ currentYear }} ONAMA FLOW. Tous droits réservés.</p>
+        <div class="footer-bottom-links">
+          <a href="#">Mentions légales</a>
+          <a href="#">Confidentialité</a>
+          <a href="#">CGU</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+</div>

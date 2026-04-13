@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Accès ONAMA</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #0ea5e9, #7dd3fc);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .container {
+            background: white;
+            padding: 40px;
+            border-radius: 60px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            width: 400px;
+        }
+        h1 {
+            color: #0c4a6e;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        button {
+            width: 100%;
+            padding: 15px;
+            margin: 10px 0;
+            border: none;
+            border-radius: 30px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        button:hover {
+            transform: scale(1.02);
+        }
+        .secretariat { background: #dbeafe; color: #1e40af; }
+        .drh { background: #e0f2fe; color: #0369a1; }
+        .direction { background: #ede9fe; color: #6d28d9; }
+        .chef { background: #dcfce7; color: #166534; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🚀 ONAMA FLOW</h1>
+        <h2 style="text-align: center; color: #64748b; margin-bottom: 30px;">Accès Direct</h2>
+        
+        <button class="secretariat" onclick="acces('secretariat')">
+            🏢 Secrétariat
+        </button>
+        <button class="drh" onclick="acces('drh')">
+            👔 DRH
+        </button>
+        <button class="direction" onclick="acces('direction')">
+            🎬 Direction Technique
+        </button>
+        <button class="chef" onclick="acces('chef')">
+            👥 Chef de Service
+        </button>
+    </div>
+
+    <script>
+        function acces(role) {
+            const users = {
+                secretariat: { nom: 'Secrétariat', role: 'SECRETARIAT', directionAccess: 'ALL' },
+                drh: { nom: 'DRH', role: 'DRH', directionAccess: 'ALL' },
+                direction: { nom: 'Directeur Technique', role: 'DIRECTEUR', directionAccess: 'TECH' },
+                chef: { nom: 'Chef de Service', role: 'CHEF_SERVICE', directionAccess: 'TECH' }
+            };
+            
+            localStorage.setItem('user', JSON.stringify(users[role]));
+            window.location.href = 'http://localhost:4200/' + role + '/dashboard';
+        }
+    </script>
+</body>
+</html>

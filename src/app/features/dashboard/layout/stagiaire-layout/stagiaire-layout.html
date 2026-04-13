@@ -1,0 +1,52 @@
+<div class="min-h-screen bg-gray-100">
+  
+  <!-- Header -->
+  <nav class="bg-white shadow-md sticky top-0 z-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex justify-between items-center h-16">
+        <div class="flex items-center space-x-3">
+          <img src="images/logo-onama.png.webp" class="h-10 w-auto">
+          <div>
+            <h1 class="text-lg font-bold text-sky-800">ONAMA FLOW</h1>
+            <p class="text-xs text-gray-500">Espace stagiaire</p>
+          </div>
+        </div>
+        <div class="flex items-center space-x-4">
+          <div class="text-right">
+            <p class="text-sm font-medium text-gray-700">{{ user?.prenom }} {{ user?.nom }}</p>
+            <p class="text-xs text-gray-400">{{ user?.email }}</p>
+          </div>
+          <button (click)="logout()" 
+                  class="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition text-sm">
+            Déconnexion
+          </button>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Navigation rapide -->
+  <div class="bg-white border-b">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex space-x-6">
+        <a routerLink="/stagiaire/dashboard" routerLinkActive="border-b-2 border-sky-500 text-sky-600"
+           class="py-3 px-1 text-gray-600 hover:text-sky-600 transition">
+          📊 Tableau de bord
+        </a>
+        <a routerLink="/stagiaire/depot-lettre" routerLinkActive="border-b-2 border-sky-500 text-sky-600"
+           class="py-3 px-1 text-gray-600 hover:text-sky-600 transition">
+          📄 Déposer ma lettre
+        </a>
+        <a routerLink="/stagiaire/suivi" routerLinkActive="border-b-2 border-sky-500 text-sky-600"
+           class="py-3 px-1 text-gray-600 hover:text-sky-600 transition">
+          📊 Suivi du dossier
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Contenu -->
+  <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
+    <router-outlet></router-outlet>
+  </div>
+</div>

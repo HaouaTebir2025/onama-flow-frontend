@@ -1,0 +1,40 @@
+:host {
+  display: block;
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-slideDown {
+  animation: slideDown 0.3s ease-out;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.animate-spin {
+  animation: spin 1s linear infinite;
+}
+
+// Animation pour les lignes du tableau
+tbody tr {
+  transition: all 0.2s;
+  
+  &:hover {
+    background-color: #f9fafb;
+  }
+}
+
+// Style pour les initiales
+.rounded-full {
+  transition: transform 0.2s;
+}
