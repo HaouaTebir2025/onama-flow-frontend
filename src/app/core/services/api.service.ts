@@ -6,7 +6,7 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class ApiService {
-  private apiUrl = 'https://onama-flow-backend.onrender.com/api';
+  private apiUrl = 'https://web-production-2de2.up.railway.app/api';
 
   constructor(private http: HttpClient) {}
 
