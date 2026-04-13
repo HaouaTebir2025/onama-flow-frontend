@@ -1,0 +1,11 @@
+@"
+services:
+  - type: web
+    name: onama-flow-frontend
+    runtime: static
+    buildCommand: npm install && npm run build --prod
+    staticPublishPath: ./dist/onama-app
+    envVars:
+      - key: NODE_VERSION
+        value: 22
+"@ | Out-File -FilePath "render.yaml" -Encoding utf8
